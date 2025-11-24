@@ -4,7 +4,7 @@
 
 > **2025 Python 语言程序设计课程大作业**
 >
-> 组名：[组名] | 成员：张天译 赵迎迎 龙辅仁 李紫嫣 | 截止日期：2025-12-31
+> 组名：关键问题是问题的关键 | 成员：张天译 赵迎迎 龙辅仁 李紫嫣 | 截止日期：2025-12-31
 
 ## 📖 1. 项目介绍 (Introduction)
 
@@ -158,29 +158,31 @@ FocusGuard/
 
 本项目由 4 人小组协作完成，分工如下 ：
 
-  * **成员 A ([名字])** - *Team Leader & Full Stack*
+  * **成员 A (龙辅仁)** - *Team Leader & Full Stack*
 
       * 负责系统架构设计与搭建 (Flask + Vue)。
       * 开发前端 Dashboard 及数据可视化模块。
       * 实现前后端视频流传输 (MJPEG)。
 
-  * **成员 B ([姓名])** - *Core Algorithms*
+  * **成员 B (赵迎迎)** - *Core Algorithms*
 
       * **Python 核心实现**：基于 MediaPipe 开发 Pose 和 Face Mesh 识别逻辑。
       * 设计坐姿判定算法（角度计算、阈值设定）。
       * 负责后端数据处理模块。
 
-  * **成员 C ([姓名])** - *Backend Logic & Optimization*
+  * **成员 C (李紫嫣)** - *Backend Logic & Optimization*
 
       * 设计 RESTful API 接口。
       * 实现用户状态记录与历史数据存储。
       * 代码规范检查与性能优化。
 
-  * **成员 D ([姓名])** - *Documentation & Testing*
+  * **成员 D (张天译)** - *Documentation & Testing*
 
-      * 撰写**实验报告**与用户手册 。
+      * 负责组队登记和最终提交材料的整合。
+      * 撰写**实验报告**，**Submission document**与用户手册 。
       * 负责多场景测试（不同光线、不同坐姿）并记录 Bug。
       * 制作演示视频与 PPT。
+      * 统筹进度，确保 12 月 31 日前完成项目。
 
 -----
 
