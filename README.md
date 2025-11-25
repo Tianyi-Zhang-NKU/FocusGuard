@@ -179,7 +179,7 @@ FocusGuard/
   * **成员 D (张天译)** - *Documentation & Testing*
 
       * 负责组队登记和最终提交材料的整合。
-      * 撰写**实验报告**，**Submission document**与用户手册 。
+      * 撰写**实验报告**，**Submission document**，README文件与用户手册 。
       * 负责多场景测试（不同光线、不同坐姿）并记录 Bug。
       * 制作演示视频与 PPT。
       * 统筹进度，确保 12 月 31 日前完成项目。
