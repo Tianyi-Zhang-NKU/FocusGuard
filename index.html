@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>坐姿与专注度监测系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-user-md"></i> 坐姿与专注度监测系统</h1>
+            <p class="subtitle">使用摄像头实时监测您的坐姿和专注度，提供即时反馈和改进建议。所有数据处理均在您的设备上完成，确保隐私安全。</p>
+        </header>
+        
+        <!--<div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div>请注意：此系统为前端模拟实现，使用计算机视觉算法模拟姿势检测。在实际应用中，您需要集成TensorFlow.js PoseNet模型来实现准确的姿态检测。</div>
+        </div>-->
+        
+        <div class="main-content">
+            <!-- 视频监控区域 -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-video"></i> 视频监控
+                </div>
+                
+                <div class="video-container">
+                    <video id="video" autoplay playsinline></video>
+                    <canvas id="canvas"></canvas>
+                    <canvas id="posture-canvas"></canvas>
+                    
+                    <div id="video-overlay" class="video-overlay">
+                        <i class="fas fa-camera" style="font-size: 3rem; margin-bottom: 20px; color: #60a5fa;"></i>
+                        <h3>摄像头未启动</h3>
+                        <p>点击下方按钮开始监测</p>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button id="start-btn" class="btn btn-primary">
+                        <i class="fas fa-play"></i> 开始监测
+                    </button>
+                    <button id="stop-btn" class="btn btn-secondary" disabled>
+                        <i class="fas fa-stop"></i> 停止监测
+                    </button>
+                    <button id="calibrate-btn" class="btn btn-secondary">
+                        <i class="fas fa-ruler-combined"></i> 校准姿势
+                    </button>
+                    <select id="camera-select" class="btn btn-secondary" style="padding: 12px;">
+                        <option value="">选择摄像头</option>
+                    </select>
+                </div>
+                
+                <div class="instructions">
+                    <h3>使用说明：</h3>
+                    <ul>
+                        <li>确保摄像头对准您的上半身，保持适当距离</li>
+                        <li>开始监测后，请保持正常坐姿</li>
+                        <li>系统将分析您的脊柱角度、头部位置和专注度</li>
+                        <li>当检测到不良姿势时，系统会发出提醒</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 数据分析区域 -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-chart-line"></i> 实时数据
+                </div>
+                
+                <div class="status-indicators">
+                    <div class="status-item">
+                        <div class="status-label">坐姿评分</div>
+                        <div id="posture-score" class="status-value status-good">85</div>
+                        <div class="progress-container">
+                            <div id="posture-progress" class="progress-bar" style="width: 85%; background-color: #10b981;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="status-item">
+                        <div class="status-label">专注度</div>
+                        <div id="focus-score" class="status-value status-good">78</div>
+                        <div class="progress-container">
+                            <div id="focus-progress" class="progress-bar" style="width: 78%; background-color: #10b981;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="status-item">
+                        <div class="status-label">脊柱角度</div>
+                        <div id="spine-angle" class="status-value status-warning">12°</div>
+                        <div class="status-label">(理想值: 0-10°)</div>
+                    </div>
+                    
+                    <div class="status-item">
+                        <div class="status-label">头部前倾</div>
+                        <div id="head-angle" class="status-value status-good">5°</div>
+                        <div class="status-label">(理想值: 0-15°)</div>
+                    </div>
+                </div>
+                
+                <div class="posture-visualization">
+                    <!--<h3 style="color: #60a5fa; margin-bottom: 15px;">姿势示意图</h3>
+                    <div class="posture-canvas-container">
+                        <canvas id="posture-canvas"></canvas>
+                    </div>-->
+                    <div id="posture-feedback" style="text-align: center; color: #94a3b8;">
+                        姿势良好，请保持
+                    </div>
+                </div>
+                
+                <div class="log-container">
+                    <h3 style="color: #60a5fa; margin-bottom: 15px;">监测日志</h3>
+                    <div id="log-entries">
+                        <div class="log-entry">
+                            <div class="log-time">12:30:05</div>
+                            <div>系统初始化完成，等待摄像头输入</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>坐姿与专注度监测系统 | 隐私安全 | 实时反馈</p>
+            <p>©2025 关键问题是问题的关键</p>
+        </footer>
+    </div>
+
+    <!-- 导入TensorFlow.js (注释掉，因为这里只是模拟实现) -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.11.0/dist/tf.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@2.2.2/dist/posenet.min.js"></script> -->
+
+    <script src="script.js"></script>
+</body>
+</html>
