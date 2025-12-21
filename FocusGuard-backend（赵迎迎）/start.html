@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FocusGuard Control</title>
+  <style>
+    body { font-family: sans-serif; margin: 20px; }
+    button { margin: 5px; padding: 10px 20px; }
+    img { margin-top: 10px; border: 1px solid #ccc; max-width: 640px; }
+    pre { background: #f4f4f4; padding: 10px; }
+  </style>
+</head>
+
+<body>
+
+<h1>FocusGuard Control</h1>
+
+<button onclick="start()">START</button>
+<button onclick="stop()">STOP</button>
+
+<p><b>Running:</b> <span id="running">N/A</span></p>
+<p><b>Timestamp:</b> <span id="ts">N/A</span></p>
+<pre id="status">N/A</pre>
+
+<img id="camera" />
+
+<script>
+const BASE = "http://127.0.0.1:5000";
+const camera = document.getElementById("camera");
+const running = document.getElementById("running");
+const ts = document.getElementById("ts");
+const statusBox = document.getElementById("status");
+
+function start() {
+  fetch(`${BASE}/start`, { method: "POST" });
+}
+
+function stop() {
+  fetch(`${BASE}/stop`, { method: "POST" });
+}
+
+// 刷新摄像头画面
+setInterval(() => {
+  camera.src = `${BASE}/frame.jpg?ts=${Date.now()}`;
+}, 200);
+
+// 拉状态
+setInterval(() => {
+  fetch(`${BASE}/status`)
+    .then(r => r.json())
+    .then(data => {
+      if (!data.ok && !data.ts) return;
+      running.innerText = "Running";
+      ts.innerText = new Date(data.ts * 1000).toLocaleTimeString();
+      statusBox.innerText = JSON.stringify(data, null, 2);
+    })
+    .catch(() => {});
+}, 300);
+</script>
+
+</body>
+</html>
