@@ -1,207 +1,211 @@
-# 🛡️ FocusGuard: AI 智能坐姿与专注度健康卫士
+<div align="center">
+  <img src="https://img.shields.io/badge/Focus-Guard-00ff88?style=for-the-badge&logo=shield&logoColor=black&labelColor=black" alt="FocusGuard Logo" />
+  
+  <h1 style="font-family: 'Orbitron', sans-serif;">🛡️ FocusGuard 专注守卫</h1>
+  
+  <p>
+    <strong>AI 驱动的智能坐姿矫正与专注力监测系统 (v2.0)</strong>
+  </p>
 
-   
+  <p>
+    <img src="https://img.shields.io/badge/Python-3.9+-3776AB?style=flat-square&logo=python&logoColor=white" />
+    <img src="https://img.shields.io/badge/Flask-2.0+-000000?style=flat-square&logo=flask&logoColor=white" />
+    <img src="https://img.shields.io/badge/Vue.js-3.0+-4FC08D?style=flat-square&logo=vue.js&logoColor=white" />
+    <img src="https://img.shields.io/badge/MediaPipe-Vision-0055FF?style=flat-square&logo=google&logoColor=white" />
+    <img src="https://img.shields.io/badge/Style-Cyberpunk-ff00de?style=flat-square" />
+  </p>
 
-> **2025 Python 语言程序设计课程大作业**
->
-> 组名：关键问题是问题的关键 | 成员：张天译 赵迎迎 龙辅仁 李紫嫣 | 截止日期：2025-12-31
+  <p>
+    <em>2025 Python 语言程序设计课程大作业 | 组名：关键问题是问题的关键</em>
+  </p>
+</div>
 
-## 📖 1. 项目介绍 (Introduction)
+---
 
-**FocusGuard** 是一款基于计算机视觉的桌面端健康辅助系统，旨在解决现代学生和办公人群因长期面对屏幕导致的**不良坐姿**与**视疲劳**问题。
+## 📖 1. 项目简介 (Introduction)
 
-本项目采用**前后端分离 (Separation of Concerns)** 架构开发。后端基于 **Python** 与 Google **MediaPipe** 框架，实时采集并分析用户的面部网格 (Face Mesh) 与身体姿态 (Pose)；前端采用 **Vue.js** 构建现代化交互界面，提供实时的健康状态反馈与可视化的专注度报表。
+**FocusGuard** 是一款融合了**计算机视觉 (CV)** 与 **游戏化 (Gamification)** 理念的桌面端健康辅助系统。
 
-### ✨ 核心功能 (Key Features)
+针对现代学生和办公人群长期面对屏幕导致的体态问题与视疲劳，本项目采用前后端分离架构。后端利用 **MediaPipe** 实时分析面部网格与身体骨骼；前端通过 **RPG 升级机制**，将枯燥的“保持专注”转化为有趣的“打怪升级”体验，帮助用户在沉浸式体验中养成健康的办公习惯。
 
-  * **📐 实时坐姿矫正**：利用几何算法检测肩颈倾斜度与头部前伸距离，实时判定“驼背”、“侧倾”等不良坐姿。
-  * **👀 疲劳/专注度监测**：通过计算眼睛纵横比 (EAR) 识别眨眼频率与闭眼时长，结合头部姿态评估用户专注状态。
-  * **📊 动态健康看板**：基于 ECharts 的数据可视化大屏，实时绘制专注力曲线与健康评分。
-  * **🔔 智能语音提醒**：当检测到异常状态持续超过阈值时，自动触发语音或弹窗提醒。
+> **🎨 设计理念**：采用 **赛博朋克 (Cyberpunk)** 视觉风格，结合 CSS3 毛玻璃特效、流光动画与 HUD 界面，打造未来科技感的交互体验。
 
------
+---
 
-## 🏗️ 2. 系统架构 (System Architecture)
+## ✨ 2. 核心功能 (Key Features)
 
-本项目遵循典型的工程化开发模式，后端负责复杂的计算逻辑，前端负责高效的渲染与交互。
+### 👁️ A. 智能视觉监测 (AI-Powered Monitoring)
+基于 **OpenCV** 与 **MediaPipe** 的多维度实时分析算法：
+* **📐 坐姿评估**：计算脊柱角度与头部前倾距离，实时判定“驼背”、“侧倾”等不良体态。
+* **😴 疲劳检测**：
+    * **EAR (Eye Aspect Ratio)**：监测闭眼时长，识别困倦/睡眠。
+    * **MAR (Mouth Aspect Ratio)**：识别打哈欠频率。
+* **📏 距离监测**：估算人脸与屏幕的距离，防止贴屏过近造成视力损伤。
+* **☀ 环境光线分析**：利用 HSV 颜色空间计算环境亮度，当光线过暗 (<60) 时发出护眼提醒。
 
-```mermaid
-graph TD
-    User[用户摄像头] -->|Video Stream| Flask[Python Flask 后端]
-    subgraph "Backend (Python)"
-        Flask --> MediaPipe[MediaPipe Pipeline]
-        MediaPipe -->|Landmarks| CoreAlgo[核心算法模块]
-        CoreAlgo -->|State/Data| API[RESTful API]
-        Flask -->|MJPEG Stream| VideoFeed[视频流服务]
-    end
-    
-    subgraph "Frontend (Vue.js)"
-        Dashboard[Vue3 Dashboard] -->|HTTP GET| VideoFeed
-        Dashboard -->|Fetch/Axios| API
-        API -->|JSON Data| Charts[ECharts 图表]
-    end
-```
+### 🎮 B. 沉浸式游戏化系统 (RPG System)
+将专注过程转化为角色成长，提升用户粘性：
+* **经验值 (XP)**：每保持专注 1 秒获得 1 XP，经验条满额自动升级。
+* **军衔体系**：
+    * `LV 1-5`: 🛡️ **见习守卫**
+    * `LV 6-10`: 🕵️ **资深特工**
+    * `LV 11-20`: ⚡ **赛博大师**
+    * `LV 20+`: 👑 **传奇领主**
+* **多用户存档**：不同账号（登录/注册）拥有独立的等级与经验记录。
+* **HUD 状态栏**：顶部导航栏实时展示等级徽章与 XP 流光进度条。
 
-### 🛠️ 技术栈 (Tech Stack)
+### ⚡ C. 交互与反馈 (Interaction)
+* **⏱️ 自定义番茄钟**：支持用户自由设定 **1 - 180 分钟** 的专注倒计时。
+* **🚨 多重报警机制**：
+    * **视觉**：全屏红色闪烁警告 + 视频画面 HUD 文字覆盖。
+    * **听觉**：内置 Web Audio API 蜂鸣报警音（无延迟，无需外部文件）。
+* **📈 数据可视化**：基于 **ECharts** 的实时折线图，展示最近 60 秒的“姿态完整度”趋势。
+
+### 👤 D. 用户系统 (User System)
+* **账号管理**：基于 SQLite 本地数据库，支持注册与登录。
+* **游客模式**：未登录即可使用基础监测功能（不记录 RPG 存档）。
+* **历史回溯**：记录每次专注过程中的异常状态统计。
+
+---
+
+## 🛠️ 3. 技术栈 (Tech Stack)
 
 | 模块 | 技术选型 | 说明 |
 | :--- | :--- | :--- |
-| **Backend** | **Python 3.9** | 核心开发语言 |
-| Web Framework | **Flask** | 轻量级 Web 服务，处理 API 和视频流 |
-| CV Engine | **MediaPipe** | Google 开源机器学习框架 (Pose/FaceMesh) |
-| Image Process | **OpenCV** | 图像预处理与绘图 |
-| **Frontend** | **Vue.js 3** | 渐进式 JavaScript 框架  |
-| UI Component | **Element Plus** | 桌面端组件库，保证交互体验  |
-| Visualization | **ECharts** | 百度开源可视化库，用于生成报表 |
+| **Frontend** | **Vue 3** | 核心框架 (Composition API + Vite) |
+| UI Library | **Element Plus** | 深度定制的深色主题组件库 |
+| Visualization | **ECharts 5** | 实时数据大屏可视化 |
+| Animation | **GSAP / Vanilla-Tilt** | 平滑过渡与 3D 悬停视差特效 |
+| Styling | **CSS3 Variables** | 霓虹配色系统 (#ff00de / #00ff88) |
+| **Backend** | **Flask** | Python 微型 Web 框架，处理 API 与视频流 |
+| CV Engine | **MediaPipe** | 高精度 BlazePose 与 Face Mesh 模型 |
+| Image Process | **OpenCV (cv2)** | 图像流处理、色彩空间转换、绘图 |
+| Database | **SQLite** | 轻量级本地存储，零配置 |
 
------
+---
 
-## 🚀 3. 快速开始 (Quick Start)
-
-请确保本地环境已安装 `Python 3.8+` 和 `Node.js 16+`。
-
-### 3.1 后端环境配置 (Backend)
-
-1.  **克隆仓库**
-
-    ```bash
-    git clone https://github.com/your-repo/FocusGuard.git
-    cd FocusGuard/backend
-    ```
-
-2.  **创建虚拟环境 (推荐)**
-
-    ```bash
-    python -m venv venv
-    # Windows
-    venv\Scripts\activate
-    # macOS/Linux
-    source venv/bin/activate
-    ```
-
-3.  **安装依赖**
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-    *`requirements.txt` 内容示例:*
-
-    ```text
-    flask==2.0.1
-    mediapipe==0.10.0
-    opencv-python==4.5.5
-    numpy==1.21.0
-    ```
-
-4.  **启动服务**
-
-    ```bash
-    python app.py
-    ```
-
-    后端默认运行在 `http://localhost:5000`。
-
-### 3.2 前端环境配置 (Frontend)
-
-1.  **进入前端目录**
-
-    ```bash
-    cd ../frontend
-    ```
-
-2.  **安装依赖**
-
-    ```bash
-    npm install
-    ```
-
-3.  **启动开发服务器**
-
-    ```bash
-    npm run dev
-    ```
-
-    前端访问地址通常为 `http://localhost:5173`。
-
------
-
-## 📂 4. 目录结构 (Directory Structure)
-
-项目结构清晰，符合软件工程分层规范 。
+## 📂 4. 项目结构 (Project Structure)
 
 ```text
 FocusGuard/
-├── backend/                # Python 后端
-│   ├── app.py              # Flask 入口文件
-│   ├── core/               # 核心算法包
-│   │   ├── detector.py     # MediaPipe 封装类
-│   │   └── geometry.py     # 几何计算工具 (角度/距离)
-│   ├── static/             # 静态资源
-│   └── templates/          # (备用) 简单 HTML 模板
-├── frontend/               # Vue.js 前端
-│   ├── src/
-│   │   ├── components/     # Vue 组件 (VideoPlayer, ChartCard)
-│   │   ├── api/            # Axios 请求封装
-│   │   └── App.vue         # 主视图
-│   └── package.json
-[cite_start]├── docs/                   # 文档与实验报告素材 [cite: 43]
-│   ├── submission_doc.docx # 最终提交文档
-│   └── images/             # 演示截图
-├── README.md               # 项目说明文档
-└── requirements.txt        # Python 依赖列表
+├── backend/                  # Python 后端核心
+│   ├── core/
+│   │   └── processor.py      # [核心算法] 姿态/人脸/光线分析实现
+│   ├── app.py                # Flask 入口：API 路由与视频流推送
+│   ├── database.py           # SQLite 数据库模型与操作
+│   ├── config.py             # 全局配置 (阈值/常量)
+│   └── requirements.txt      # Python 依赖清单
+│
+└── frontend/                 # Vue 前端应用
+    ├── src/
+    │   ├── components/       # 公共组件 (LoginModal, etc.)
+    │   ├── views/
+    │   │   └── DashboardView.vue # [核心视图] 仪表盘：整合视频、图表与 RPG 逻辑
+    │   ├── App.vue           # 根组件 (含全局粒子背景)
+    │   └── main.js           # Vue 入口配置
+    ├── index.html            # HTML 模板
+    └── vite.config.js        # Vite 构建配置
+
 ```
 
------
+---
 
-## 👥 5. 团队分工 (Team)
+## 🚀 5. 安装与运行 (Setup Guide)
 
-本项目由 4 人小组协作完成，分工如下 ：
+请确保本地环境已安装 **Python 3.8+** 和 **Node.js 16+**。
 
-  * **成员 A (龙辅仁)** - *Team Leader & Full Stack*
+### 🟢 后端启动 (Backend)
 
-      * 负责系统架构设计与搭建 (Flask + Vue)。
-      * 开发前端 Dashboard 及数据可视化模块。
-      * 实现前后端视频流传输 (MJPEG)。
+1. 进入后端目录：
+```bash
+cd backend
 
-  * **成员 B (赵迎迎)** - *Core Algorithms*
+```
 
-      * **Python 核心实现**：基于 MediaPipe 开发 Pose 和 Face Mesh 识别逻辑。
-      * 设计坐姿判定算法（角度计算、阈值设定）。
-      * 负责后端数据处理模块。
 
-  * **成员 C (李紫嫣)** - *Backend Logic & Optimization*
+2. 创建并激活虚拟环境（推荐）：
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
 
-      * 设计 RESTful API 接口。
-      * 实现用户状态记录与历史数据存储。
-      * 代码规范检查与性能优化。
+# Mac/Linux
+source venv/bin/activate
 
-  * **成员 D (张天译)** - *Documentation & Testing*
+```
 
-      * 负责组队登记和最终提交材料的整合。
-      * 撰写**实验报告**，**Submission document**，README文件与用户手册 。
-      * 负责多场景测试（不同光线、不同坐姿）并记录 Bug。
-      * 制作演示视频与 PPT。
-      * 统筹进度，确保 12 月 31 日前完成项目。
 
------
+3. 安装依赖：
+```bash
+pip install -r requirements.txt
 
-## 📜 6. 评分标准自查 (Checklist)
+```
 
-  *  **选题实用性**：解决实际健康问题，应用场景明确 。
-  *  **工程代码量**：包含完整的前后端代码，架构清晰。
-  * **Python 能力**：后端核心算法完全由 Python 实现 。
-  *  **用户体验**：界面美观，操作流程顺滑 。
 
------
+4. 启动服务：
+```bash
+python app.py
 
-## ⚠️ 注意事项 (Notes)
+```
 
-  * 本项目基于摄像头运行，请确保设备拥有可用摄像头并授予浏览器访问权限。
-  * **隐私声明**：所有图像数据仅在本地内存中处理，**不会**上传至云端，保障用户隐私。
 
------
+> 后端服务默认运行在: `http://localhost:5000`
 
-> Created with ❤️ by Nankai University Students.
 
------
+
+### 🔵 前端启动 (Frontend)
+
+1. 进入前端目录（打开新终端）：
+```bash
+cd frontend
+
+```
+
+
+2. 安装依赖：
+```bash
+npm install
+
+```
+
+
+3. 启动开发服务器：
+```bash
+npm run dev
+
+```
+
+
+> 前端页面默认运行在: `http://localhost:5173`
+
+
+
+---
+
+## 👥 6. 团队分工 (Team)
+
+| 成员 | 角色 | 主要职责 |
+| --- | --- | --- |
+| **龙辅仁** | 全栈开发 / 组长 | 系统架构设计 (Flask+Vue)，前后端视频流整合，可视化报表开发 |
+| **赵迎迎** | 核心算法 | Python CV 核心实现 (MediaPipe Pose/Face)，坐姿判定与疲劳算法设计 |
+| **李紫嫣** | 后端逻辑 | RESTful API 设计，数据库结构设计，多用户系统逻辑实现 |
+| **张天译** | 文档与测试 | 需求分析，多场景系统测试 (光线/姿态)，撰写实验报告与用户手册 |
+
+---
+
+## 📜 版权说明 (License)
+
+本项目仅供 **南开大学 2025 Python 语言程序设计** 课程作业展示使用。
+
+**隐私声明 (Privacy Policy)**:
+所有摄像头图像数据仅在用户本地设备的内存中进行实时分析处理，**绝不上传至任何云端服务器**，充分保障用户隐私安全。
+
+---
+
+<div align="center">
+<sub>Created with ❤️ by FocusGuard Team</sub>
+</div>
+
+```
+
+```
