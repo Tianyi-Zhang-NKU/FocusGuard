@@ -107,7 +107,60 @@ FocusGuard/
     └── vite.config.js        # Vite 构建配置
 
 ```
+graph TB
+    %% 定义样式
+    classDef hardware fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef backend fill:#e1f5fe,stroke:#0277bd,stroke-width:2px;
+    classDef frontend fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+    classDef storage fill:#fff9c4,stroke:#fbc02d,stroke-width:2px;
 
+    subgraph UserLayer [用户交互层 User Layer]
+        direction TB
+        Camera(🎥 摄像头/Webcam):::hardware
+        User((👤 用户 User)):::hardware
+    end
+
+    subgraph Frontend [前端应用层 Frontend (Vue.js 3)]
+        direction TB
+        VideoPlayer[🖥️ 视频流播放器\n(MJPEG Player)]:::frontend
+        Dashboard[📊 数据看板 Dashboard\n(Element Plus)]:::frontend
+        Charts[📈 专注度图表\n(ECharts)]:::frontend
+        AudioAlert[🔊 语音/弹窗提醒]:::frontend
+    end
+
+    subgraph Backend [后端服务层 Backend (Python Flask)]
+        direction TB
+        FlaskAPI[🌐 Flask Web Server]:::backend
+        
+        subgraph CoreLogic [核心算法 Core Algorithms]
+            OpenCV[🖼️ OpenCV\n图像预处理]:::backend
+            MediaPipe[🧠 MediaPipe Pipeline\n(FaceMesh & Pose)]:::backend
+            Geometry[📐 几何计算模块\n(Geometry Utils)]:::backend
+            StateCheck[✅ 状态判定机\n(State Machine)]:::backend
+        end
+    end
+
+    %% 数据流向
+    User --> Camera
+    Camera -->|原始视频流 Raw Stream| OpenCV
+    
+    %% 后端处理流
+    OpenCV --> MediaPipe
+    MediaPipe -->|关键点坐标 Landmarks| Geometry
+    Geometry -->|角度/距离参数| StateCheck
+    StateCheck -->|健康状态 JSON| FlaskAPI
+    OpenCV -->|绘制骨骼后帧| FlaskAPI
+
+    %% 前后端交互
+    FlaskAPI -->|MJPEG 视频流| VideoPlayer
+    FlaskAPI -->|RESTful API (JSON)| Dashboard
+    
+    %% 前端内部
+    Dashboard --> Charts
+    Dashboard -->|触发阈值| AudioAlert
+
+    %% 布局调整
+    VideoPlayer ~~~ Dashboard
 ---
 
 ## 🚀 5. 安装与运行 (Setup Guide)
