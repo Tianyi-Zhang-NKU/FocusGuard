@@ -107,6 +107,7 @@ FocusGuard/
     └── vite.config.js        # Vite 构建配置
 
 ```
+
 ```mermaid
 graph TB
     %% 样式定义
@@ -115,14 +116,14 @@ graph TB
     classDef frontend fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
 
     %% 1. 用户交互层
-    subgraph UserLayer [用户交互层]
+    subgraph UserLayer ["用户交互层 (User Layer)"]
         direction TB
         Camera("🎥 摄像头 (Webcam)"):::hardware
         User("👤 用户 (User)"):::hardware
     end
 
     %% 2. 前端应用层
-    subgraph Frontend [前端应用层 (Vue.js)]
+    subgraph Frontend ["前端应用层 (Vue.js)"]
         direction TB
         VideoPlayer("🖥️ 视频流播放器 (MJPEG)"):::frontend
         Dashboard("📊 数据看板 (Dashboard)"):::frontend
@@ -131,11 +132,11 @@ graph TB
     end
 
     %% 3. 后端服务层
-    subgraph Backend [后端服务层 (Flask)]
+    subgraph Backend ["后端服务层 (Flask)"]
         direction TB
         FlaskAPI("🌐 Flask Web Server"):::backend
         
-        subgraph CoreLogic [核心算法模块]
+        subgraph CoreLogic ["核心算法模块 (Core Algorithms)"]
             direction TB
             OpenCV("🖼️ OpenCV 图像处理"):::backend
             MediaPipe("🧠 MediaPipe Pipeline"):::backend
@@ -159,6 +160,8 @@ graph TB
     
     Dashboard --> Charts
     Dashboard --> AudioAlert
+
+
 ---
 
 ## 🚀 5. 安装与运行 (Setup Guide)
