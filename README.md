@@ -107,60 +107,58 @@ FocusGuard/
     └── vite.config.js        # Vite 构建配置
 
 ```
+```mermaid
 graph TB
-    %% 定义样式
+    %% 样式定义
     classDef hardware fill:#f9f,stroke:#333,stroke-width:2px;
     classDef backend fill:#e1f5fe,stroke:#0277bd,stroke-width:2px;
     classDef frontend fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
-    classDef storage fill:#fff9c4,stroke:#fbc02d,stroke-width:2px;
 
-    subgraph UserLayer [用户交互层 User Layer]
+    %% 1. 用户交互层
+    subgraph UserLayer [用户交互层]
         direction TB
-        Camera(🎥 摄像头/Webcam):::hardware
-        User((👤 用户 User)):::hardware
+        Camera("🎥 摄像头 (Webcam)"):::hardware
+        User("👤 用户 (User)"):::hardware
     end
 
-    subgraph Frontend [前端应用层 Frontend (Vue.js 3)]
+    %% 2. 前端应用层
+    subgraph Frontend [前端应用层 (Vue.js)]
         direction TB
-        VideoPlayer[🖥️ 视频流播放器\n(MJPEG Player)]:::frontend
-        Dashboard[📊 数据看板 Dashboard\n(Element Plus)]:::frontend
-        Charts[📈 专注度图表\n(ECharts)]:::frontend
-        AudioAlert[🔊 语音/弹窗提醒]:::frontend
+        VideoPlayer("🖥️ 视频流播放器 (MJPEG)"):::frontend
+        Dashboard("📊 数据看板 (Dashboard)"):::frontend
+        Charts("📈 专注度图表 (ECharts)"):::frontend
+        AudioAlert("🔊 语音提醒"):::frontend
     end
 
-    subgraph Backend [后端服务层 Backend (Python Flask)]
+    %% 3. 后端服务层
+    subgraph Backend [后端服务层 (Flask)]
         direction TB
-        FlaskAPI[🌐 Flask Web Server]:::backend
+        FlaskAPI("🌐 Flask Web Server"):::backend
         
-        subgraph CoreLogic [核心算法 Core Algorithms]
-            OpenCV[🖼️ OpenCV\n图像预处理]:::backend
-            MediaPipe[🧠 MediaPipe Pipeline\n(FaceMesh & Pose)]:::backend
-            Geometry[📐 几何计算模块\n(Geometry Utils)]:::backend
-            StateCheck[✅ 状态判定机\n(State Machine)]:::backend
+        subgraph CoreLogic [核心算法模块]
+            direction TB
+            OpenCV("🖼️ OpenCV 图像处理"):::backend
+            MediaPipe("🧠 MediaPipe Pipeline"):::backend
+            Geometry("📐 几何计算模块"):::backend
+            StateCheck("✅ 状态判定机"):::backend
         end
     end
 
-    %% 数据流向
+    %% 连线关系
     User --> Camera
-    Camera -->|原始视频流 Raw Stream| OpenCV
+    Camera -->|Raw Stream| OpenCV
     
-    %% 后端处理流
     OpenCV --> MediaPipe
-    MediaPipe -->|关键点坐标 Landmarks| Geometry
-    Geometry -->|角度/距离参数| StateCheck
-    StateCheck -->|健康状态 JSON| FlaskAPI
-    OpenCV -->|绘制骨骼后帧| FlaskAPI
+    MediaPipe -->|Landmarks| Geometry
+    Geometry -->|Angles| StateCheck
+    StateCheck -->|JSON State| FlaskAPI
+    OpenCV -->|Processed Frame| FlaskAPI
 
-    %% 前后端交互
-    FlaskAPI -->|MJPEG 视频流| VideoPlayer
-    FlaskAPI -->|RESTful API (JSON)| Dashboard
+    FlaskAPI -->|MJPEG Stream| VideoPlayer
+    FlaskAPI -->|REST API| Dashboard
     
-    %% 前端内部
     Dashboard --> Charts
-    Dashboard -->|触发阈值| AudioAlert
-
-    %% 布局调整
-    VideoPlayer ~~~ Dashboard
+    Dashboard --> AudioAlert
 ---
 
 ## 🚀 5. 安装与运行 (Setup Guide)
