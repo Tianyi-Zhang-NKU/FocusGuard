@@ -108,59 +108,6 @@ FocusGuard/
 
 ```
 
-```mermaid
-graph TB
-    %% 样式定义
-    classDef hardware fill:#f9f,stroke:#333,stroke-width:2px;
-    classDef backend fill:#e1f5fe,stroke:#0277bd,stroke-width:2px;
-    classDef frontend fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
-
-    %% 1. 用户交互层
-    subgraph UserLayer ["用户交互层 (User Layer)"]
-        direction TB
-        Camera("🎥 摄像头 (Webcam)"):::hardware
-        User("👤 用户 (User)"):::hardware
-    end
-
-    %% 2. 前端应用层
-    subgraph Frontend ["前端应用层 (Vue.js)"]
-        direction TB
-        VideoPlayer("🖥️ 视频流播放器 (MJPEG)"):::frontend
-        Dashboard("📊 数据看板 (Dashboard)"):::frontend
-        Charts("📈 专注度图表 (ECharts)"):::frontend
-        AudioAlert("🔊 语音提醒"):::frontend
-    end
-
-    %% 3. 后端服务层
-    subgraph Backend ["后端服务层 (Flask)"]
-        direction TB
-        FlaskAPI("🌐 Flask Web Server"):::backend
-        
-        subgraph CoreLogic ["核心算法模块 (Core Algorithms)"]
-            direction TB
-            OpenCV("🖼️ OpenCV 图像处理"):::backend
-            MediaPipe("🧠 MediaPipe Pipeline"):::backend
-            Geometry("📐 几何计算模块"):::backend
-            StateCheck("✅ 状态判定机"):::backend
-        end
-    end
-
-    %% 连线关系
-    User --> Camera
-    Camera -->|Raw Stream| OpenCV
-    
-    OpenCV --> MediaPipe
-    MediaPipe -->|Landmarks| Geometry
-    Geometry -->|Angles| StateCheck
-    StateCheck -->|JSON State| FlaskAPI
-    OpenCV -->|Processed Frame| FlaskAPI
-
-    FlaskAPI -->|MJPEG Stream| VideoPlayer
-    FlaskAPI -->|REST API| Dashboard
-    
-    Dashboard --> Charts
-    Dashboard --> AudioAlert
-
 
 ---
 
