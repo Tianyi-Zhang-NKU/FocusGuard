@@ -205,6 +205,3 @@ npm run dev
 <sub>Created with ❤️ by FocusGuard Team</sub>
 </div>
 
-```
-
-```
